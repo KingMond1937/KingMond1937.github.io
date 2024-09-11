@@ -167,6 +167,33 @@
     resetButton.addEventListener('click', resetTimer);
 
     updateDisplay();
+
+    // WebSocket connection to ESP32 WebSocket server
+    const webSocket = new WebSocket('ws://YOUR_ESP32_IP_ADDRESS:81');
+
+    // Find the element where data will be displayed
+    const dataDiv = document.getElementById('sensor-data');
+
+    // Event handler for when a message is received from the WebSocket server
+    webSocket.onmessage = function (event) {
+        // Update the webpage with the incoming sensor data
+        dataDiv.textContent = 'Sensor Data: ' + event.data;
+    };
+
+    // Event handler for WebSocket errors
+    webSocket.onerror = function (error) {
+        console.error('WebSocket Error: ', error);
+    };
+
+    // Optionally, handle the connection opening event
+    webSocket.onopen = function () {
+        console.log('WebSocket connection established');
+    };
+
+    // Optionally, handle the connection closing event
+    webSocket.onclose = function () {
+        console.log('WebSocket connection closed');
+    };
 </script>
 </body>
 </html>

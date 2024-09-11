@@ -1,5 +1,5 @@
-let timer = 0;
-let flashInterval; // Declare flashInterval globally
+let timer;
+let flashInterval;
 let totalSeconds = 0;
 let running = false;
 
@@ -10,6 +10,8 @@ const timeDisplay = document.getElementById('time-display');
 const startButton = document.getElementById('start-btn');
 const stopButton = document.getElementById('stop-btn');
 const resetButton = document.getElementById('reset-btn');
+
+const beepSound = document.getElementById('beep-sound'); // Audio element for beep
 
 function updateDisplay() {
     const hours = Math.floor(totalSeconds / 3600);
@@ -34,8 +36,8 @@ function startTimer() {
                     totalSeconds--;
                     updateDisplay(); // Update display after each decrement
                 } else {
-                    clearInterval(timer);
-                    flashRed(); // Start flashing when time hits zero
+                    clearInterval(timer); // Stop the countdown when it hits zero
+                    flashRed(); // Start flashing and sound immediately
                 }
             }, 1000); // Decrement every second
         }
@@ -45,29 +47,49 @@ function startTimer() {
 function stopTimer() {
     running = false;
     clearInterval(timer); // Stop the countdown timer
-    clearInterval(flashInterval); // Stop flashing if the timer is stopped
+    clearInterval(flashInterval); // Stop flashing
+    stopBeep(); // Stop the beep
     document.body.classList.remove('flash'); // Ensure the flashing stops immediately
 }
 
 function resetTimer() {
     running = false;
     clearInterval(timer); // Stop the countdown timer
-    clearInterval(flashInterval); // Stop flashing if the reset button is pressed
+    clearInterval(flashInterval); // Stop flashing
+    stopBeep(); // Stop the beep
     totalSeconds = 0;
     updateDisplay(); // Reset the display to 00:00:00
     document.body.classList.remove('flash'); // Ensure the flashing stops and the background is reset
 }
 
 function flashRed() {
-    // Clear any existing flash interval to prevent multiple intervals from running simultaneously
-    clearInterval(flashInterval);
+    clearInterval(flashInterval); // Clear any previous flashing intervals
 
-    // Set up the flashing effect to continue indefinitely
+    // Immediately flash red and play beep
+    document.body.classList.add('flash'); // Turn on red immediately
+    playBeep(); // Play the beep sound immediately
+
+    // Set interval for future flashes (every second)
     flashInterval = setInterval(() => {
-        document.body.classList.toggle('flash');
-    }, 500); // Toggle every 500 milliseconds for a slower flash effect
+        document.body.classList.toggle('flash'); // Toggle flash on/off
+
+        if (document.body.classList.contains('flash')) {
+            playBeep(); // Play beep sound only when turning red
+        }
+    }, 1000); // 1 second red (with beep), 1 second off (cycle every second)
 }
 
+function playBeep() {
+    beepSound.currentTime = 0; // Reset sound to the start
+    beepSound.play(); // Play the beep sound
+}
+
+function stopBeep() {
+    beepSound.pause(); // Stop the beep sound
+    beepSound.currentTime = 0; // Reset the audio to the start
+}
+
+// Add event listeners for buttons
 startButton.addEventListener('click', startTimer);
 stopButton.addEventListener('click', stopTimer);
 resetButton.addEventListener('click', resetTimer);

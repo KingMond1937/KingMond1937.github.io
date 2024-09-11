@@ -36,12 +36,10 @@
             padding: 10px 20px;
         }
 
-        /*
         body.flash {
             background-color: red;
-            transition: background-color 0.5s ease;
+            transition: background-color 0.2s ease;
         }
-        */
 
         #sensor-data {
             margin-top: 20px;
@@ -53,9 +51,9 @@
 <body>
 <div class="timer-container">
     <div>
-        <label for="hours"></label><input id="hours" max="23" min="0" placeholder="HH" type="number">
-        <label for="minutes"></label><input id="minutes" max="59" min="0" placeholder="MM" type="number">
-        <label for="seconds"></label><input id="seconds" max="59" min="0" placeholder="SS" type="number">
+        <input id="hours" max="23" min="0" placeholder="HH" type="number">
+        <input id="minutes" max="59" min="0" placeholder="MM" type="number">
+        <input id="seconds" max="59" min="0" placeholder="SS" type="number">
     </div>
     <div id="time-display">00:00:00</div>
     <div class="button-group">
@@ -66,6 +64,9 @@
 
     <!-- Add a div for displaying sensor data -->
     <div id="sensor-data">Waiting for sensor data...</div>
+
+    <!-- Add the audio element for the beep sound -->
+    <audio id="beep-sound" preload="auto" src="beep_sound_effect.mp3"></audio>
 </div>
 
 <script>
@@ -81,6 +82,8 @@
     const startButton = document.getElementById('start-btn');
     const stopButton = document.getElementById('stop-btn');
     const resetButton = document.getElementById('reset-btn');
+
+    const beepSound = document.getElementById('beep-sound'); // Audio element for beep
 
     function updateDisplay() {
         const hours = Math.floor(totalSeconds / 3600);
@@ -105,8 +108,8 @@
                         totalSeconds--;
                         updateDisplay(); // Update display after each decrement
                     } else {
-                        clearInterval(timer);
-                        flashRed(); // Start flashing when time hits zero
+                        clearInterval(timer); // Stop the countdown when it hits zero
+                        flashRed(); // Start flashing and sound immediately
                     }
                 }, 1000); // Decrement every second
             }
@@ -116,62 +119,54 @@
     function stopTimer() {
         running = false;
         clearInterval(timer); // Stop the countdown timer
-        clearInterval(flashInterval); // Stop flashing if the timer is stopped
+        clearInterval(flashInterval); // Stop flashing
+        stopBeep(); // Stop the beep
         document.body.classList.remove('flash'); // Ensure the flashing stops immediately
     }
 
     function resetTimer() {
         running = false;
         clearInterval(timer); // Stop the countdown timer
-        clearInterval(flashInterval); // Stop flashing if the reset button is pressed
+        clearInterval(flashInterval); // Stop flashing
+        stopBeep(); // Stop the beep
         totalSeconds = 0;
         updateDisplay(); // Reset the display to 00:00:00
         document.body.classList.remove('flash'); // Ensure the flashing stops and the background is reset
     }
 
     function flashRed() {
-        // Clear any existing flash interval to prevent multiple intervals from running simultaneously
-        clearInterval(flashInterval);
+        clearInterval(flashInterval); // Clear any previous flashing intervals
 
-        // Set up the flashing effect to continue indefinitely
+        // Immediately flash red and play beep
+        document.body.classList.add('flash'); // Turn on red immediately
+        playBeep(); // Play the beep sound immediately
+
+        // Set interval for future flashes (every second)
         flashInterval = setInterval(() => {
-            document.body.classList.toggle('flash');
-        }, 500); // Toggle every 500 milliseconds for a slower flash effect
+            document.body.classList.toggle('flash'); // Toggle flash on/off
+
+            if (document.body.classList.contains('flash')) {
+                playBeep(); // Play beep sound only when turning red
+            }
+        }, 1000); // 1 second red (with beep), 1 second off (cycle every second)
     }
 
+    function playBeep() {
+        beepSound.currentTime = 0; // Reset sound to the start
+        beepSound.play(); // Play the beep sound
+    }
+
+    function stopBeep() {
+        beepSound.pause(); // Stop the beep sound
+        beepSound.currentTime = 0; // Reset the audio to the start
+    }
+
+    // Add event listeners for buttons
     startButton.addEventListener('click', startTimer);
     stopButton.addEventListener('click', stopTimer);
     resetButton.addEventListener('click', resetTimer);
 
     updateDisplay();
-
-    // WebSocket connection to ESP32 WebSocket server
-    const webSocket = new WebSocket('ws://YOUR_ESP32_IP_ADDRESS:81');
-
-    // Find the element where data will be displayed
-    const dataDiv = document.getElementById('sensor-data');
-
-    // Event handler for when a message is received from the WebSocket server
-    webSocket.onmessage = function (event) {
-        // Update the webpage with the incoming sensor data
-        dataDiv.textContent = 'Sensor Data: ' + event.data;
-    };
-
-    // ERROR HANDLING
-    // Event handler for WebSocket errors
-    webSocket.onerror = function (error) {
-        console.error('WebSocket Error: ', error);
-    };
-
-    // Optionally, handle the connection opening event
-    webSocket.onopen = function () {
-        console.log('WebSocket connection established');
-    };
-
-    // Optionally, handle the connection closing event
-    webSocket.onclose = function () {
-        console.log('WebSocket connection closed');
-    };
 </script>
 </body>
 </html>

@@ -1,0 +1,167 @@
+h1 {
+    text-align: center; /* Center the text */
+    width: 100%; /* Ensure the heading spans the full width */
+    margin-bottom: 20px; /* Space below the heading */
+    font-size: 2em; /* Adjust size if needed */
+}
+
+/* Container for the entire lower body section */
+#lower-body-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+    margin-top: 20px;
+}
+
+/* Responsive PNG Image */
+#lower-body-image {
+    width: 100%; /* This ensures the image will take the full width of its container */
+    max-width: 600px; /* The maximum width of the PNG */
+    height: auto; /* Maintain aspect ratio */
+}
+
+/* General Styling for the body part boxes */
+.body-section {
+    border: 1px solid #000;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    text-align: center;
+    font-size: 0.9em;
+    width: 220px; /* Increased width */
+    position: absolute;
+    box-sizing: border-box;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Box shadow for visual depth */
+    transition: all 0.3s ease;
+}
+
+/* Ensure consistent spacing between the boxes */
+.body-section {
+    margin-bottom: 20px;
+}
+
+/* Left-side boxes */
+.quads-box.left {
+    top: 10%; /* Adjusted to move it up */
+    right: 55%;
+}
+
+.hamstrings-box.left {
+    top: 32%; /* Left hamstrings box positioning */
+    right: 55%;
+}
+
+.calf-box.left {
+    top: 55%; /* Left calf box positioning */
+    right: 55%;
+}
+
+.foot-box.left {
+    top: 80%; /* Left foot box positioning */
+    right: 55%;
+}
+
+/* Right-side boxes */
+.quads-box.right {
+    top: 10%; /* Right quads box positioning */
+    left: 55%;
+}
+
+.hamstrings-box.right {
+    top: 32%; /* Right hamstrings box positioning */
+    left: 55%;
+}
+
+.calf-box.right {
+    top: 55%; /* Right calf box positioning */
+    left: 55%;
+}
+
+.foot-box.right {
+    top: 80%; /* Right foot box positioning */
+    left: 55%;
+}
+
+/* Smaller Button Styles */
+button {
+    padding: 7px 12px; /* Smaller button size */
+    font-size: 0.9rem; /* Slightly smaller text */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Start Button */
+.start-btn {
+    background-color: #28a745; /* Green for Start */
+    color: white;
+}
+
+.start-btn:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+/* Stop Button */
+.stop-btn {
+    background-color: #dc3545; /* Red for Stop */
+    color: white;
+}
+
+.stop-btn:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+/* Reset Button */
+.reset-btn {
+    background-color: #ffc107; /* Yellow for Reset */
+    color: black;
+}
+
+.reset-btn:hover {
+    background-color: #e0a800; /* Darker yellow on hover */
+}
+
+/* Button row styling */
+.button-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+/* Flash red when the timer hits zero */
+.flash {
+    background-color: red !important;
+}
+
+/* --- Mobile-Responsive Adjustments for Smaller Screens --- */
+@media (max-width: 768px) {
+    #lower-body-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .body-section {
+        position: relative;
+        margin-bottom: 30px;
+        width: 90%; /* Make boxes almost full-width on mobile */
+    }
+
+    .left, .right {
+        right: auto;
+        left: auto;
+    }
+
+    #lower-body-image {
+        width: 90%; /* Make the image responsive on smaller screens */
+        max-width: 400px; /* Adjust max width for smaller screens */
+    }
+
+    /* Adjust button sizes for touch devices */
+    button {
+        padding: 10px 15px;
+        font-size: 1rem;
+    }
+}
+

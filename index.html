@@ -2,346 +2,156 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Multiple Timers with 6 Sensors</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            font-family: Arial, sans-serif;
-            background-color: white;
-            margin: 0;
-        }
-
-        .timer-grid, .sensor-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 timers/sensors per row */
-            gap: 30px;
-            margin: 30px;
-        }
-
-        .timer-container, .sensor-container {
-            position: relative;
-            text-align: center;
-            padding: 40px;
-            border: 3px solid black;
-            border-radius: 12px;
-            background-color: #f8f8f8;
-            transition: background-color 0.5s ease;
-        }
-
-        h3 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-        }
-
-        .time-display, .sensor-display {
-            font-size: 5rem;
-            margin: 20px 0;
-        }
-
-        .button-group button {
-            font-size: 1.5rem;
-            margin: 10px;
-            padding: 10px 25px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .reset-btn {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-        }
-
-        .start-btn {
-            background-color: #008CBA;
-            color: white;
-            border: none;
-        }
-
-        .stop-btn {
-            background-color: #f44336;
-            color: white;
-            border: none;
-        }
-
-        button {
-            user-select: none;
-        }
-
-        /* Flashing effect when timer reaches zero */
-        .flash {
-            background-color: red !important;
-        }
-    </style>
+    <meta content="width=device-width, initial-scale=1.0">
+    <title>Lower Body Monitoring</title>
+    <link href="style.css" rel="stylesheet">
 </head>
 <body>
 
-<!-- Timer Grid -->
-<div class="timer-grid">
-    <!-- Timer 1 -->
-    <div class="timer-container" id="timer-container-1">
-        <h3>Timer 1</h3>
-        <div class="time-display" id="time-display-1">00:00:10</div>
-        <div class="button-group">
-            <button class="start-btn" id="start-btn-1">Start</button>
-            <button class="stop-btn" id="stop-btn-1">Stop</button>
-            <button class="reset-btn" id="reset-btn-1">Reset</button>
+<h1>Lower Body Monitoring</h1>
+
+<div id="lower-body-container">
+    <img alt="Lower Body Diagram" id="lower-body-image" src="lower_body_clipart.png">
+
+    <!-- Left Quads Timer -->
+    <div class="body-section quads-box left">
+        <h2>Left Quads</h2>
+        <div class="timer-display" id="left-quads-timer-display">00:00:00</div>
+        <div class="time-inputs">
+            <input id="left-quads-hours-input" max="99" min="0" placeholder="00" type="number"/>
+            <input id="left-quads-minutes-input" max="59" min="0" placeholder="00" type="number"/>
+            <input id="left-quads-seconds-input" max="59" min="0" placeholder="00" type="number"/>
         </div>
-    </div>
-    <!-- Timer 2 -->
-    <div class="timer-container" id="timer-container-2">
-        <h3>Timer 2</h3>
-        <div class="time-display" id="time-display-2">00:00:15</div>
-        <div class="button-group">
-            <button class="start-btn" id="start-btn-2">Start</button>
-            <button class="stop-btn" id="stop-btn-2">Stop</button>
-            <button class="reset-btn" id="reset-btn-2">Reset</button>
+        <div class="button-row">
+            <button class="start-btn" id="left-quads-start-btn">Start</button>
+            <button class="stop-btn" id="left-quads-stop-btn">Stop</button>
+            <button class="reset-btn" id="left-quads-reset-btn">Reset</button>
         </div>
+        <div class="sensor-reading" id="left-quads-sensor">Sensor: N/A</div>
     </div>
-    <!-- Timer 3 -->
-    <div class="timer-container" id="timer-container-3">
-        <h3>Timer 3</h3>
-        <div class="time-display" id="time-display-3">00:00:20</div>
-        <div class="button-group">
-            <button class="start-btn" id="start-btn-3">Start</button>
-            <button class="stop-btn" id="stop-btn-3">Stop</button>
-            <button class="reset-btn" id="reset-btn-3">Reset</button>
+
+    <!-- Right Quads Timer -->
+    <div class="body-section quads-box right">
+        <h2>Right Quads</h2>
+        <div class="timer-display" id="right-quads-timer-display">00:00:00</div>
+        <div class="time-inputs">
+            <input id="right-quads-hours-input" max="99" min="0" placeholder="00" type="number"/>
+            <input id="right-quads-minutes-input" max="59" min="0" placeholder="00" type="number"/>
+            <input id="right-quads-seconds-input" max="59" min="0" placeholder="00" type="number"/>
         </div>
-    </div>
-    <!-- Timer 4 -->
-    <div class="timer-container" id="timer-container-4">
-        <h3>Timer 4</h3>
-        <div class="time-display" id="time-display-4">00:00:25</div>
-        <div class="button-group">
-            <button class="start-btn" id="start-btn-4">Start</button>
-            <button class="stop-btn" id="stop-btn-4">Stop</button>
-            <button class="reset-btn" id="reset-btn-4">Reset</button>
+        <div class="button-row">
+            <button class="start-btn" id="right-quads-start-btn">Start</button>
+            <button class="stop-btn" id="right-quads-stop-btn">Stop</button>
+            <button class="reset-btn" id="right-quads-reset-btn">Reset</button>
         </div>
+        <div class="sensor-reading" id="right-quads-sensor">Sensor: N/A</div>
     </div>
-    <!-- Timer 5 -->
-    <div class="timer-container" id="timer-container-5">
-        <h3>Timer 5</h3>
-        <div class="time-display" id="time-display-5">00:00:30</div>
-        <div class="button-group">
-            <button class="start-btn" id="start-btn-5">Start</button>
-            <button class="stop-btn" id="stop-btn-5">Stop</button>
-            <button class="reset-btn" id="reset-btn-5">Reset</button>
+
+    <!-- Left Hamstrings Timer -->
+    <div class="body-section hamstrings-box left">
+        <h2>Left Hamstrings</h2>
+        <div class="timer-display" id="left-hamstrings-timer-display">00:00:00</div>
+        <div class="time-inputs">
+            <input id="left-hamstrings-hours-input" max="99" min="0" placeholder="00" type="number"/>
+            <input id="left-hamstrings-minutes-input" max="59" min="0" placeholder="00" type="number"/>
+            <input id="left-hamstrings-seconds-input" max="59" min="0" placeholder="00" type="number"/>
         </div>
-    </div>
-    <!-- Timer 6 -->
-    <div class="timer-container" id="timer-container-6">
-        <h3>Timer 6</h3>
-        <div class="time-display" id="time-display-6">00:00:35</div>
-        <div class="button-group">
-            <button class="start-btn" id="start-btn-6">Start</button>
-            <button class="stop-btn" id="stop-btn-6">Stop</button>
-            <button class="reset-btn" id="reset-btn-6">Reset</button>
+        <div class="button-row">
+            <button class="start-btn" id="left-hamstrings-start-btn">Start</button>
+            <button class="stop-btn" id="left-hamstrings-stop-btn">Stop</button>
+            <button class="reset-btn" id="left-hamstrings-reset-btn">Reset</button>
         </div>
+        <div class="sensor-reading" id="left-hamstrings-sensor">Sensor: N/A</div>
     </div>
+
+    <!-- Right Hamstrings Timer -->
+    <div class="body-section hamstrings-box right">
+        <h2>Right Hamstrings</h2>
+        <div class="timer-display" id="right-hamstrings-timer-display">00:00:00</div>
+        <div class="time-inputs">
+            <input id="right-hamstrings-hours-input" max="99" min="0" placeholder="00" type="number"/>
+            <input id="right-hamstrings-minutes-input" max="59" min="0" placeholder="00" type="number"/>
+            <input id="right-hamstrings-seconds-input" max="59" min="0" placeholder="00" type="number"/>
+        </div>
+        <div class="button-row">
+            <button class="start-btn" id="right-hamstrings-start-btn">Start</button>
+            <button class="stop-btn" id="right-hamstrings-stop-btn">Stop</button>
+            <button class="reset-btn" id="right-hamstrings-reset-btn">Reset</button>
+        </div>
+        <div class="sensor-reading" id="right-hamstrings-sensor">Sensor: N/A</div>
+    </div>
+
+    <!-- Left Calf Timer -->
+    <div class="body-section calf-box left">
+        <h2>Left Calf</h2>
+        <div class="timer-display" id="left-calf-timer-display">00:00:00</div>
+        <div class="time-inputs">
+            <input id="left-calf-hours-input" max="99" min="0" placeholder="00" type="number"/>
+            <input id="left-calf-minutes-input" max="59" min="0" placeholder="00" type="number"/>
+            <input id="left-calf-seconds-input" max="59" min="0" placeholder="00" type="number"/>
+        </div>
+        <div class="button-row">
+            <button class="start-btn" id="left-calf-start-btn">Start</button>
+            <button class="stop-btn" id="left-calf-stop-btn">Stop</button>
+            <button class="reset-btn" id="left-calf-reset-btn">Reset</button>
+        </div>
+        <div class="sensor-reading" id="left-calf-sensor">Sensor: N/A</div>
+    </div>
+
+    <!-- Right Calf Timer -->
+    <div class="body-section calf-box right">
+        <h2>Right Calf</h2>
+        <div class="timer-display" id="right-calf-timer-display">00:00:00</div>
+        <div class="time-inputs">
+            <input id="right-calf-hours-input" max="99" min="0" placeholder="00" type="number"/>
+            <input id="right-calf-minutes-input" max="59" min="0" placeholder="00" type="number"/>
+            <input id="right-calf-seconds-input" max="59" min="0" placeholder="00" type="number"/>
+        </div>
+        <div class="button-row">
+            <button class="start-btn" id="right-calf-start-btn">Start</button>
+            <button class="stop-btn" id="right-calf-stop-btn">Stop</button>
+            <button class="reset-btn" id="right-calf-reset-btn">Reset</button>
+        </div>
+        <div class="sensor-reading" id="right-calf-sensor">Sensor: N/A</div>
+    </div>
+
+    <!-- Left Foot Timer -->
+    <div class="body-section foot-box left">
+        <h2>Left Foot</h2>
+        <div class="timer-display" id="left-foot-timer-display">00:00:00</div>
+        <div class="time-inputs">
+            <input id="left-foot-hours-input" max="99" min="0" placeholder="00" type="number"/>
+            <input id="left-foot-minutes-input" max="59" min="0" placeholder="00" type="number"/>
+            <input id="left-foot-seconds-input" max="59" min="0" placeholder="00" type="number"/>
+        </div>
+        <div class="button-row">
+            <button class="start-btn" id="left-foot-start-btn">Start</button>
+            <button class="stop-btn" id="left-foot-stop-btn">Stop</button>
+            <button class="reset-btn" id="left-foot-reset-btn">Reset</button>
+        </div>
+        <div class="sensor-reading" id="left-foot-sensor">Sensor: N/A</div>
+    </div>
+
+    <!-- Right Foot Timer -->
+    <div class="body-section foot-box right">
+        <h2>Right Foot</h2>
+        <div class="timer-display" id="right-foot-timer-display">00:00:00</div>
+        <div class="time-inputs">
+            <input id="right-foot-hours-input" max="99" min="0" placeholder="00" type="number"/>
+            <input id="right-foot-minutes-input" max="59" min="0" placeholder="00" type="number"/>
+            <input id="right-foot-seconds-input" max="59" min="0" placeholder="00" type="number"/>
+        </div>
+        <div class="button-row">
+            <button class="start-btn" id="right-foot-start-btn">Start</button>
+            <button class="stop-btn" id="right-foot-stop-btn">Stop</button>
+            <button class="reset-btn" id="right-foot-reset-btn">Reset</button>
+        </div>
+        <div class="sensor-reading" id="right-foot-sensor">Sensor: N/A</div>
+    </div>
+
 </div>
 
-<!-- Sensor Grid -->
-<div class="sensor-grid">
-    <!-- Sensor 1 -->
-    <div class="sensor-container">
-        <h3>Sensor 1</h3>
-        <div class="sensor-display" id="sensor-display-1">--</div>
-    </div>
-    <!-- Sensor 2 -->
-    <div class="sensor-container">
-        <h3>Sensor 2</h3>
-        <div class="sensor-display" id="sensor-display-2">--</div>
-    </div>
-    <!-- Sensor 3 -->
-    <div class="sensor-container">
-        <h3>Sensor 3</h3>
-        <div class="sensor-display" id="sensor-display-3">--</div>
-    </div>
-    <!-- Sensor 4 -->
-    <div class="sensor-container">
-        <h3>Sensor 4</h3>
-        <div class="sensor-display" id="sensor-display-4">--</div>
-    </div>
-    <!-- Sensor 5 -->
-    <div class="sensor-container">
-        <h3>Sensor 5</h3>
-        <div class="sensor-display" id="sensor-display-5">--</div>
-    </div>
-    <!-- Sensor 6 -->
-    <div class="sensor-container">
-        <h3>Sensor 6</h3>
-        <div class="sensor-display" id="sensor-display-6">--</div>
-    </div>
-</div>
+<script defer src="timer.js"></script>
 
-<!-- Audio for beep sound -->
-<audio id="beep-sound" preload="auto" src="beep_sound_effect.mp3"></audio>
-
-<!-- WebSocket Client JavaScript -->
-<script>
-    const websocket = new WebSocket('ws://YOUR_ESP32_IP_ADDRESS:81');  // Replace with your Arduino's IP and port
-
-    // Listen for messages from the Arduino WebSocket server
-    websocket.onmessage = function (event) {
-        const data = event.data;
-        const sensorValues = data.split(",");  // Assuming sensor data is comma-separated for 6 sensors
-
-        // Update sensor displays
-        for (let i = 0; i < 6; i++) {
-            document.getElementById(`sensor-display-${i + 1}`).textContent = `Sensor ${i + 1}: ${sensorValues[i]}`;
-        }
-    };
-
-    websocket.onerror = function (event) {
-        console.error('WebSocket error: ', event);
-    };
-
-    websocket.onopen = function () {
-        console.log('Connected to Arduino WebSocket server');
-    };
-
-    websocket.onclose = function () {
-        console.log('Disconnected from Arduino WebSocket server');
-    };
-
-    // Define initial times for each timer in seconds
-    const initialTimes = {
-        1: 10, // 00:00:10
-        2: 15, // 00:00:15
-        3: 20, // 00:00:20
-        4: 25, // 00:00:25
-        5: 30, // 00:00:30
-        6: 35  // 00:00:35
-    };
-
-    // Define timers array with initial data
-    const timers = [
-        {id: 1, totalSeconds: initialTimes[1], running: false, timer: null, flashInterval: null},
-        {id: 2, totalSeconds: initialTimes[2], running: false, timer: null, flashInterval: null},
-        {id: 3, totalSeconds: initialTimes[3], running: false, timer: null, flashInterval: null},
-        {id: 4, totalSeconds: initialTimes[4], running: false, timer: null, flashInterval: null},
-        {id: 5, totalSeconds: initialTimes[5], running: false, timer: null, flashInterval: null},
-        {id: 6, totalSeconds: initialTimes[6], running: false, timer: null, flashInterval: null},
-    ];
-
-    // Function to format time as HH:MM:SS
-    function formatTime(seconds) {
-        const hrs = Math.floor(seconds / 3600);
-        const mins = Math.floor((seconds % 3600) / 60);
-        const secs = seconds % 60;
-        return `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-    }
-
-    // Update the display for a specific timer
-    function updateDisplay(timerId) {
-        const timer = timers.find(t => t.id === timerId);
-        const displayElement = document.getElementById(`time-display-${timerId}`);
-        displayElement.textContent = formatTime(timer.totalSeconds);
-    }
-
-    // Start the timer
-    function startTimer(timerId) {
-        const timer = timers.find(t => t.id === timerId);
-        if (!timer.running) {
-            timer.running = true;
-
-            // If the timer was previously stopped and not at zero, continue from current time
-            if (timer.totalSeconds <= 0) {
-                timer.totalSeconds = initialTimes[timerId];
-                updateDisplay(timerId);
-            }
-
-            timer.timer = setInterval(() => {
-                if (timer.totalSeconds > 0) {
-                    timer.totalSeconds--;
-                    updateDisplay(timerId);
-                }
-                if (timer.totalSeconds === 0) {
-                    clearInterval(timer.timer);
-                    timer.running = false;
-                    flashRed(timerId);  // Flash and play beep when timer hits zero
-                }
-            }, 1000);
-        }
-    }
-
-    // Stop the timer
-    function stopTimer(timerId) {
-        const timer = timers.find(t => t.id === timerId);
-        if (timer.running) {
-            timer.running = false;
-            clearInterval(timer.timer);
-        }
-        clearFlashing(timerId);
-    }
-
-    // Reset the timer to its initial time
-    function resetTimer(timerId) {
-        const timer = timers.find(t => t.id === timerId);
-        if (timer.running) {
-            clearInterval(timer.timer);
-            timer.running = false;
-        }
-        clearFlashing(timerId);
-        timer.totalSeconds = initialTimes[timerId];
-        updateDisplay(timerId);
-    }
-
-    // Flashing logic for when timer hits zero
-    function flashRed(timerId) {
-        const timer = timers.find(t => t.id === timerId);
-        const timerContainer = document.getElementById(`timer-container-${timerId}`);
-
-        // Add flash class immediately
-        timerContainer.classList.add('flash');
-        playBeep();
-
-        // Start flashing interval
-        timer.flashInterval = setInterval(() => {
-            timerContainer.classList.toggle('flash');
-            if (timerContainer.classList.contains('flash')) {
-                playBeep(); // Play beep sound when flashing
-            }
-        }, 1000);
-    }
-
-    // Clear flashing effect
-    function clearFlashing(timerId) {
-        const timer = timers.find(t => t.id === timerId);
-        const timerContainer = document.getElementById(`timer-container-${timerId}`);
-
-        // Clear flashing interval and remove flash class
-        if (timer.flashInterval) {
-            clearInterval(timer.flashInterval);
-            timer.flashInterval = null;
-        }
-        timerContainer.classList.remove('flash');
-    }
-
-    // Play beep sound
-    function playBeep() {
-        const beepSound = document.getElementById('beep-sound');
-        beepSound.currentTime = 0; // Reset to start
-        beepSound.play().catch(error => {
-            console.error('Beep sound failed to play:', error);
-        });
-    }
-
-    // Attach event listeners for all timers
-    timers.forEach(timer => {
-        document.getElementById(`start-btn-${timer.id}`).addEventListener('click', () => startTimer(timer.id));
-        document.getElementById(`stop-btn-${timer.id}`).addEventListener('click', () => stopTimer(timer.id));
-        document.getElementById(`reset-btn-${timer.id}`).addEventListener('click', () => resetTimer(timer.id));
-    });
-
-    // Initialize all displays
-    timers.forEach(timer => {
-        updateDisplay(timer.id);
-    });
-</script>
 </body>
 </html>

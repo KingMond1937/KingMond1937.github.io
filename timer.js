@@ -43,44 +43,24 @@ document.addEventListener('DOMContentLoaded', () => {
             inputSeconds: 'right-hamstrings-seconds-input'
         },
         {
-            section: '.calf-box.left',
-            display: 'left-calf-timer-display',
-            start: 'left-calf-start-btn',
-            stop: 'left-calf-stop-btn',
-            reset: 'left-calf-reset-btn',
-            inputHours: 'left-calf-hours-input',
-            inputMinutes: 'left-calf-minutes-input',
-            inputSeconds: 'left-calf-seconds-input'
+            section: '.knee-pit-box.left',
+            display: 'left-knee-pit-timer-display',
+            start: 'left-knee-pit-start-btn',
+            stop: 'left-knee-pit-stop-btn',
+            reset: 'left-knee-pit-reset-btn',
+            inputHours: 'left-knee-pit-hours-input',
+            inputMinutes: 'left-knee-pit-minutes-input',
+            inputSeconds: 'left-knee-pit-seconds-input'
         },
         {
-            section: '.calf-box.right',
-            display: 'right-calf-timer-display',
-            start: 'right-calf-start-btn',
-            stop: 'right-calf-stop-btn',
-            reset: 'right-calf-reset-btn',
-            inputHours: 'right-calf-hours-input',
-            inputMinutes: 'right-calf-minutes-input',
-            inputSeconds: 'right-calf-seconds-input'
-        },
-        {
-            section: '.foot-box.left',
-            display: 'left-foot-timer-display',
-            start: 'left-foot-start-btn',
-            stop: 'left-foot-stop-btn',
-            reset: 'left-foot-reset-btn',
-            inputHours: 'left-foot-hours-input',
-            inputMinutes: 'left-foot-minutes-input',
-            inputSeconds: 'left-foot-seconds-input'
-        },
-        {
-            section: '.foot-box.right',
-            display: 'right-foot-timer-display',
-            start: 'right-foot-start-btn',
-            stop: 'right-foot-stop-btn',
-            reset: 'right-foot-reset-btn',
-            inputHours: 'right-foot-hours-input',
-            inputMinutes: 'right-foot-minutes-input',
-            inputSeconds: 'right-foot-seconds-input'
+            section: '.knee-pit-box.right',
+            display: 'right-knee-pit-timer-display',
+            start: 'right-knee-pit-start-btn',
+            stop: 'right-knee-pit-stop-btn',
+            reset: 'right-knee-pit-reset-btn',
+            inputHours: 'right-knee-pit-hours-input',
+            inputMinutes: 'right-knee-pit-minutes-input',
+            inputSeconds: 'right-knee-pit-seconds-input'
         }
     ];
 
@@ -105,7 +85,19 @@ document.addEventListener('DOMContentLoaded', () => {
             const hours = Math.floor(totalSeconds / 3600);
             const minutes = Math.floor((totalSeconds % 3600) / 60);
             const seconds = totalSeconds % 60;
+
+            // Update the display text
             timerDisplay.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+            // Calculate the total minutes left
+            const minutesLeft = totalSeconds / 60;
+
+            // Apply red background if time is 5 minutes or less
+            if (minutesLeft <= 5 && totalSeconds > 0) {  // 5 minutes or less and timer is still running
+                sectionElement.classList.add('timer-red');
+            } else {
+                sectionElement.classList.remove('timer-red');
+            }
         }
 
         // Function to start the flashing effect and beep sound

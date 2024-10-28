@@ -1,10 +1,3 @@
-h1 {
-    text-align: center; /* Center the text */
-    width: 100%; /* Ensure the heading spans the full width */
-    margin-bottom: 20px; /* Space below the heading */
-    font-size: 2em; /* Adjust size if needed */
-}
-
 /* Container for the entire lower body section */
 #lower-body-container {
     display: flex;
@@ -16,8 +9,8 @@ h1 {
 
 /* Responsive PNG Image */
 #lower-body-image {
-    width: 100%; /* This ensures the image will take the full width of its container */
-    max-width: 600px; /* The maximum width of the PNG */
+    width: 100%; /* Ensures the image takes the full width of its container */
+    max-width: 600px; /* Maximum width of the PNG */
     height: auto; /* Maintain aspect ratio */
 }
 
@@ -28,59 +21,56 @@ h1 {
     background-color: rgba(255, 255, 255, 0.9);
     text-align: center;
     font-size: 0.9em;
-    width: 220px; /* Increased width */
+    width: 220px; /* Box width */
     position: absolute;
     box-sizing: border-box;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Box shadow for visual depth */
     transition: all 0.3s ease;
-}
-
-/* Ensure consistent spacing between the boxes */
-.body-section {
     margin-bottom: 20px;
 }
 
 /* Left-side boxes */
 .quads-box.left {
-    top: 10%; /* Adjusted to move it up */
+    top: 5%; /* Adjusted positioning */
     right: 55%;
 }
 
 .hamstrings-box.left {
-    top: 32%; /* Left hamstrings box positioning */
+    top: 27%; /* Left hamstrings (knee pit) box positioning */
     right: 55%;
 }
 
-.calf-box.left {
-    top: 55%; /* Left calf box positioning */
-    right: 55%;
-}
-
-.foot-box.left {
-    top: 80%; /* Left foot box positioning */
+.knee-pit-box.left {
+    top: 50%; /* Adjust the positioning as needed */
     right: 55%;
 }
 
 /* Right-side boxes */
 .quads-box.right {
-    top: 10%; /* Right quads box positioning */
+    top: 5%; /* Right quads box positioning */
     left: 55%;
 }
 
 .hamstrings-box.right {
-    top: 32%; /* Right hamstrings box positioning */
+    top: 27%; /* Right hamstrings (knee pit) box positioning */
     left: 55%;
 }
 
-.calf-box.right {
-    top: 55%; /* Right calf box positioning */
+.knee-pit-box.right {
+    top: 50%; /* Adjust the positioning as needed */
     left: 55%;
 }
 
-.foot-box.right {
-    top: 80%; /* Right foot box positioning */
-    left: 55%;
+/* Timer solid red for under 5 minutes */
+.timer-red {
+    background-color: red !important;
+    color: white !important;
+}
+
+/* Flash red when the timer hits zero */
+.flash {
+    background-color: red !important;
 }
 
 /* Smaller Button Styles */
@@ -130,11 +120,6 @@ button {
     margin-top: 10px;
 }
 
-/* Flash red when the timer hits zero */
-.flash {
-    background-color: red !important;
-}
-
 /* --- Mobile-Responsive Adjustments for Smaller Screens --- */
 @media (max-width: 768px) {
     #lower-body-container {
@@ -165,3 +150,5 @@ button {
     }
 }
 
+/*
+ */

@@ -183,5 +183,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Initialize display
         updateTimerDisplay();
+
+        // Placeholder function to update battery percentage
+        function updateBatteryPercentage(percentage) {
+            const batteryPercentage = document.getElementById('battery-percentage');
+            batteryPercentage.textContent = `${percentage}%`;
+        }
+
+        // Example: Call this function to test battery percentage display
+        updateBatteryPercentage(85); // Example: Set to 85% initially
+
+        // Global variable to track mute state
+        let isMuted = false;
+
+        // Function to toggle mute
+        function toggleMute() {
+            isMuted = !isMuted;
+            const muteButton = document.getElementById('mute-button');
+            muteButton.textContent = isMuted ? 'Unmute Sound' : 'Mute Sound';
+        }
+
+        // Attach event listener to mute button
+        document.getElementById('mute-button').addEventListener('click', toggleMute);
+
+        // Modify playBeep function to respect mute state
+        function playBeep() {
+            if (!isMuted) {
+                beepSound.currentTime = 0;  // Reset sound to the start
+                beepSound.play();  // Play the beep sound
+            }
+        }
+
     });
 });

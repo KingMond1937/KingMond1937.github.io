@@ -120,6 +120,55 @@ button {
     margin-top: 10px;
 }
 
+/* Battery container positioning */
+#battery-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the battery icon within the image */
+    text-align: center;
+    color: #333; /* Color for the percentage text */
+}
+
+/* Battery icon styling */
+#battery-icon {
+    width: 50px; /* Adjust size as needed */
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Battery percentage styling */
+#battery-percentage {
+    font-size: 1.2em; /* Adjust font size as needed */
+    margin-top: 5px;
+}
+
+/* Mute switch container styling */
+#mute-switch-container {
+    position: absolute;
+    bottom: -50px; /* Adjust this value as needed to position below the image */
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+/* Mute button styling */
+#mute-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#mute-button:hover {
+    background-color: #0056b3;
+}
+
 /* --- Mobile-Responsive Adjustments for Smaller Screens --- */
 @media (max-width: 768px) {
     #lower-body-container {
@@ -149,6 +198,3 @@ button {
         font-size: 1rem;
     }
 }
-
-/*
- */

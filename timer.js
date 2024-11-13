@@ -64,7 +64,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
-    const beepSound = new Audio('beep_sound_effect.mp3');  // Path to your beep sound
+    const beepSound = new Audio('beep_sound_effect.mp3'); // Path to your beep sound
+    let isMuted = false; // Global variable to track mute state
 
     sections.forEach(section => {
         const sectionElement = document.querySelector(section.section);
@@ -80,58 +81,44 @@ document.addEventListener('DOMContentLoaded', () => {
         let flashInterval = null;
         let totalSeconds = 0;
 
-        // Function to update the timer display
         function updateTimerDisplay() {
             const hours = Math.floor(totalSeconds / 3600);
             const minutes = Math.floor((totalSeconds % 3600) / 60);
             const seconds = totalSeconds % 60;
 
-            // Update the display text
             timerDisplay.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 
-            // Calculate the total minutes left
-            const minutesLeft = totalSeconds / 60;
-
-            // Apply red background if time is 5 minutes or less
-            if (minutesLeft <= 5 && totalSeconds > 0) {  // 5 minutes or less and timer is still running
+            if (totalSeconds <= 300 && totalSeconds > 0) { // 5 minutes or less
                 sectionElement.classList.add('timer-red');
             } else {
                 sectionElement.classList.remove('timer-red');
             }
         }
 
-        // Function to start the flashing effect and beep sound
         function startFlashing() {
             flashInterval = setInterval(() => {
-                sectionElement.classList.toggle('flash');  // Toggle the flash class
-                playBeep();
-            }, 500);  // Flash twice per second
+                sectionElement.classList.toggle('flash');
+                if (!isMuted) playBeep();
+            }, 500); // Flash twice per second
         }
 
-        // Function to stop flashing and beep
         function stopFlashing() {
             clearInterval(flashInterval);
             sectionElement.classList.remove('flash');
             stopBeep();
         }
 
-        // Function to play the beep sound
         function playBeep() {
-            beepSound.currentTime = 0;  // Reset sound to the start
-            beepSound.play();  // Play the beep sound
+            beepSound.currentTime = 0;
+            beepSound.play();
         }
 
-        // Function to stop the beep sound
         function stopBeep() {
             beepSound.pause();
-            beepSound.currentTime = 0;  // Reset the audio to the start
+            beepSound.currentTime = 0;
         }
 
-        // Start button event listener
         startButton.addEventListener('click', () => {
-            console.log('Start button clicked for section:', section.section);
-
-            // Clear any existing timer and stop flashing/beeping before restarting
             clearInterval(timer);
             stopFlashing();
 
@@ -139,15 +126,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const minutes = parseInt(inputMinutes.value, 10) || 0;
             const seconds = parseInt(inputSeconds.value, 10) || 0;
 
-            console.log(`Hours: ${hours}, Minutes: ${minutes}, Seconds: ${seconds}`);  // Debugging log
-
             totalSeconds = (hours * 3600) + (minutes * 60) + seconds;
 
-            console.log(`Total Seconds: ${totalSeconds}`);  // Debugging log
-
-            // Only start the timer if there's time to count down
             if (totalSeconds > 0) {
-                updateTimerDisplay();  // Update the timer display immediately
+                updateTimerDisplay();
                 timer = setInterval(() => {
                     if (totalSeconds > 0) {
                         totalSeconds--;
@@ -155,64 +137,65 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else {
                         clearInterval(timer);
                         timer = null;
-                        startFlashing();  // Start flashing and beep when timer hits zero
+                        startFlashing();
                     }
                 }, 1000);
-            } else {
-                console.warn("Timer is set to zero. Enter valid time values.");
             }
         });
 
-        // Stop button event listener
         stopButton.addEventListener('click', () => {
-            console.log('Stop button clicked for section:', section.section);
             clearInterval(timer);
             timer = null;
-            stopFlashing();  // Stop the flashing and beep
+            stopFlashing();
         });
 
-        // Reset button event listener
         resetButton.addEventListener('click', () => {
-            console.log('Reset button clicked for section:', section.section);
             clearInterval(timer);
             timer = null;
             stopFlashing();
             totalSeconds = 0;
-            updateTimerDisplay();  // Reset display to 00:00:00
+            updateTimerDisplay();
+            inputHours.value = inputMinutes.value = inputSeconds.value = '';
         });
 
-        // Initialize display
         updateTimerDisplay();
-
-        // Placeholder function to update battery percentage
-        function updateBatteryPercentage(percentage) {
-            const batteryPercentage = document.getElementById('battery-percentage');
-            batteryPercentage.textContent = `${percentage}%`;
-        }
-
-        // Example: Call this function to test battery percentage display
-        updateBatteryPercentage(85); // Example: Set to 85% initially
-
-        // Global variable to track mute state
-        let isMuted = false;
-
-        // Function to toggle mute
-        function toggleMute() {
-            isMuted = !isMuted;
-            const muteButton = document.getElementById('mute-button');
-            muteButton.textContent = isMuted ? 'Unmute Sound' : 'Mute Sound';
-        }
-
-        // Attach event listener to mute button
-        document.getElementById('mute-button').addEventListener('click', toggleMute);
-
-        // Modify playBeep function to respect mute state
-        function playBeep() {
-            if (!isMuted) {
-                beepSound.currentTime = 0;  // Reset sound to the start
-                beepSound.play();  // Play the beep sound
-            }
-        }
-
     });
+
+    // Mute button functionality
+    const muteButton = document.getElementById('mute-button');
+    muteButton.addEventListener('click', () => {
+        isMuted = !isMuted;
+        muteButton.textContent = isMuted ? 'Unmute Sound' : 'Mute Sound';
+    });
+
+    // Generate 8x8 grid
+    function generateGrid() {
+        const gridContainer = document.getElementById("sensor-grid");
+        // Updated sensor positions to match the image
+        const sensorPositions = [
+            [0, 3],
+            [1, 1], [1, 3], [1, 5],
+            [2, 2], [2, 4],
+            [4, 0], [4, 2], [4, 5], [4, 7],
+            [7, 0], [7, 2], [7, 5], [7, 7]
+        ];
+
+        for (let row = 0; row < 8; row++) {
+            const tableRow = document.createElement("tr");
+            for (let col = 0; col < 8; col++) {
+                const cell = document.createElement("td");
+                if (sensorPositions.some(pos => pos[0] === row && pos[1] === col)) {
+                    cell.classList.add("sensor-cell"); // Red cell for sensor
+                } else {
+                    cell.classList.add("empty-cell"); // Blue cell for empty space
+                }
+                tableRow.appendChild(cell);
+            }
+            gridContainer.appendChild(tableRow);
+        }
+    }
+
+    // Initialize
+    document.getElementById("lower-body").style.display = "block";
+    generateGrid();
 });

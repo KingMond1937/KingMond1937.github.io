@@ -198,3 +198,57 @@ button {
         font-size: 1rem;
     }
 }
+
+/* Basic Styling for Tabs */
+.tab-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.tab-link {
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    margin: 0 5px;
+    border-radius: 5px 5px 0 0;
+    font-size: 1rem;
+}
+
+.tab-link.active {
+    background-color: #0056b3;
+}
+
+/* Hide all tab contents by default */
+.tab-content {
+    display: none;
+}
+
+/* Specific styling for the grid table */
+#grid-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#sensor-grid {
+    border-collapse: collapse;
+    margin: 20px;
+}
+
+#sensor-grid td {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #000;
+}
+
+/* Styling for cells */
+.sensor-cell {
+    background-color: #d9534f; /* Red for sensors */
+}
+
+.empty-cell {
+    background-color: #5bc0de; /* Light blue for empty cells */
+}

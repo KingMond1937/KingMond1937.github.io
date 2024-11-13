@@ -2,128 +2,158 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1.0">
-    <title>Lower Body Monitoring</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoring System</title>
     <link href="style.css" rel="stylesheet">
+    <script>
+        // Function to handle tab switching
+        function openTab(evt, tabName) {
+            const tabContent = document.getElementsByClassName("tab-content");
+            const tabLinks = document.getElementsByClassName("tab-link");
+
+            // Hide all tab contents
+            for (let i = 0; i < tabContent.length; i++) {
+                tabContent[i].style.display = "none";
+            }
+
+            // Remove the active class from all tab links
+            for (let i = 0; i < tabLinks.length; i++) {
+                tabLinks[i].classList.remove("active");
+            }
+
+            // Show the selected tab and add the active class to the link
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
 </head>
 <body>
 
-<h1>Lower Body Monitoring</h1>
+<h1>Monitoring System</h1>
 
-<div id="lower-body-container">
-    <img alt="Lower Body Diagram" id="lower-body-image" src="lower_body_clipart.png">
+<!-- Tab Links -->
+<div class="tab-container">
+    <!-- Ensure onclick attribute directly calls openTab -->
+    <button class="tab-link active" onclick="openTab(event, 'lower-body')">Lower Body Monitoring</button>
+    <button class="tab-link" onclick="openTab(event, 'grid')">Grid</button>
+</div>
 
-    <div id="battery-container">
-        <img alt="Battery Icon" id="battery-icon" src="ios-battery-full-4.png">
-        <span id="battery-percentage">100%</span> <!-- Placeholder text; to be updated with WebSocket data -->
+<div id="lower-body" class="tab-content" style="display:block;">
+    <div id="lower-body-container">
+        <img alt="Lower Body Diagram" id="lower-body-image" src="lower_body_clipart.png">
+
+        <div id="battery-container">
+            <img alt="Battery Icon" id="battery-icon" src="ios-battery-full-4.png">
+            <span id="battery-percentage">100%</span> <!-- Placeholder text; to be updated with WebSocket data -->
+        </div>
+
+        <div id="mute-switch-container">
+            <button id="mute-button">Mute Sound</button>
+        </div>
+
+        <!-- Left Quads Timer -->
+        <div class="body-section quads-box left">
+            <h2>Left Quads</h2>
+            <div class="timer-display" id="left-quads-timer-display">00:00:00</div>
+            <div class="time-inputs">
+                <input id="left-quads-hours-input" max="99" min="0" placeholder="00" type="number"/>
+                <input id="left-quads-minutes-input" max="59" min="0" placeholder="00" type="number"/>
+                <input id="left-quads-seconds-input" max="59" min="0" placeholder="00" type="number"/>
+            </div>
+            <div class="button-row">
+                <button class="start-btn" id="left-quads-start-btn">Start</button>
+                <button class="stop-btn" id="left-quads-stop-btn">Stop</button>
+                <button class="reset-btn" id="left-quads-reset-btn">Reset</button>
+            </div>
+        </div>
+
+        <!-- Right Quads Timer -->
+        <div class="body-section quads-box right">
+            <h2>Right Quads</h2>
+            <div class="timer-display" id="right-quads-timer-display">00:00:00</div>
+            <div class="time-inputs">
+                <input id="right-quads-hours-input" max="99" min="0" placeholder="00" type="number"/>
+                <input id="right-quads-minutes-input" max="59" min="0" placeholder="00" type="number"/>
+                <input id="right-quads-seconds-input" max="59" min="0" placeholder="00" type="number"/>
+            </div>
+            <div class="button-row">
+                <button class="start-btn" id="right-quads-start-btn">Start</button>
+                <button class="stop-btn" id="right-quads-stop-btn">Stop</button>
+                <button class="reset-btn" id="right-quads-reset-btn">Reset</button>
+            </div>
+        </div>
+
+        <!-- Left Hamstrings Timer -->
+        <div class="body-section hamstrings-box left">
+            <h2>Left Hamstrings</h2>
+            <div class="timer-display" id="left-hamstrings-timer-display">00:00:00</div>
+            <div class="time-inputs">
+                <input id="left-hamstrings-hours-input" max="99" min="0" placeholder="00" type="number"/>
+                <input id="left-hamstrings-minutes-input" max="59" min="0" placeholder="00" type="number"/>
+                <input id="left-hamstrings-seconds-input" max="59" min="0" placeholder="00" type="number"/>
+            </div>
+            <div class="button-row">
+                <button class="start-btn" id="left-hamstrings-start-btn">Start</button>
+                <button class="stop-btn" id="left-hamstrings-stop-btn">Stop</button>
+                <button class="reset-btn" id="left-hamstrings-reset-btn">Reset</button>
+            </div>
+        </div>
+
+        <!-- Right Hamstrings Timer -->
+        <div class="body-section hamstrings-box right">
+            <h2>Right Hamstrings</h2>
+            <div class="timer-display" id="right-hamstrings-timer-display">00:00:00</div>
+            <div class="time-inputs">
+                <input id="right-hamstrings-hours-input" max="99" min="0" placeholder="00" type="number"/>
+                <input id="right-hamstrings-minutes-input" max="59" min="0" placeholder="00" type="number"/>
+                <input id="right-hamstrings-seconds-input" max="59" min="0" placeholder="00" type="number"/>
+            </div>
+            <div class="button-row">
+                <button class="start-btn" id="right-hamstrings-start-btn">Start</button>
+                <button class="stop-btn" id="right-hamstrings-stop-btn">Stop</button>
+                <button class="reset-btn" id="right-hamstrings-reset-btn">Reset</button>
+            </div>
+        </div>
+
+        <!-- Left Knee Pit Timer -->
+        <div class="body-section knee-pit-box left">
+            <h2>Left Knee Pit</h2>
+            <div class="timer-display" id="left-knee-pit-timer-display">00:00:00</div>
+            <div class="time-inputs">
+                <input id="left-knee-pit-hours-input" max="99" min="0" placeholder="00" type="number"/>
+                <input id="left-knee-pit-minutes-input" max="59" min="0" placeholder="00" type="number"/>
+                <input id="left-knee-pit-seconds-input" max="59" min="0" placeholder="00" type="number"/>
+            </div>
+            <div class="button-row">
+                <button class="start-btn" id="left-knee-pit-start-btn">Start</button>
+                <button class="stop-btn" id="left-knee-pit-stop-btn">Stop</button>
+                <button class="reset-btn" id="left-knee-pit-reset-btn">Reset</button>
+            </div>
+        </div>
+
+        <!-- Right Knee Pit Timer -->
+        <div class="body-section knee-pit-box right">
+            <h2>Right Knee Pit</h2>
+            <div class="timer-display" id="right-knee-pit-timer-display">00:00:00</div>
+            <div class="time-inputs">
+                <input id="right-knee-pit-hours-input" max="99" min="0" placeholder="00" type="number"/>
+                <input id="right-knee-pit-minutes-input" max="59" min="0" placeholder="00" type="number"/>
+                <input id="right-knee-pit-seconds-input" max="59" min="0" placeholder="00" type="number"/>
+            </div>
+            <div class="button-row">
+                <button class="start-btn" id="right-knee-pit-start-btn">Start</button>
+                <button class="stop-btn" id="right-knee-pit-stop-btn">Stop</button>
+                <button class="reset-btn" id="right-knee-pit-reset-btn">Reset</button>
+            </div>
+        </div>
     </div>
+</div>
 
-    <div id="mute-switch-container">
-        <button id="mute-button">Mute Sound</button>
+<!-- Grid Content -->
+<div id="grid" class="tab-content">
+    <div id="grid-container">
+        <table id="sensor-grid"></table>
     </div>
-
-    <!-- Left Quads Timer -->
-    <div class="body-section quads-box left">
-        <h2>Left Quads</h2>
-        <div class="timer-display" id="left-quads-timer-display">00:00:00</div>
-        <div class="time-inputs">
-            <input id="left-quads-hours-input" max="99" min="0" placeholder="00" type="number"/>
-            <input id="left-quads-minutes-input" max="59" min="0" placeholder="00" type="number"/>
-            <input id="left-quads-seconds-input" max="59" min="0" placeholder="00" type="number"/>
-        </div>
-        <div class="button-row">
-            <button class="start-btn" id="left-quads-start-btn">Start</button>
-            <button class="stop-btn" id="left-quads-stop-btn">Stop</button>
-            <button class="reset-btn" id="left-quads-reset-btn">Reset</button>
-        </div>
-        <div class="sensor-reading" id="left-quads-sensor">Sensor: N/A</div>
-    </div>
-
-    <!-- Right Quads Timer -->
-    <div class="body-section quads-box right">
-        <h2>Right Quads</h2>
-        <div class="timer-display" id="right-quads-timer-display">00:00:00</div>
-        <div class="time-inputs">
-            <input id="right-quads-hours-input" max="99" min="0" placeholder="00" type="number"/>
-            <input id="right-quads-minutes-input" max="59" min="0" placeholder="00" type="number"/>
-            <input id="right-quads-seconds-input" max="59" min="0" placeholder="00" type="number"/>
-        </div>
-        <div class="button-row">
-            <button class="start-btn" id="right-quads-start-btn">Start</button>
-            <button class="stop-btn" id="right-quads-stop-btn">Stop</button>
-            <button class="reset-btn" id="right-quads-reset-btn">Reset</button>
-        </div>
-        <div class="sensor-reading" id="right-quads-sensor">Sensor: N/A</div>
-    </div>
-
-    <!-- Left Hamstrings Timer -->
-    <div class="body-section hamstrings-box left">
-        <h2>Left Hamstrings</h2>
-        <div class="timer-display" id="left-hamstrings-timer-display">00:00:00</div>
-        <div class="time-inputs">
-            <input id="left-hamstrings-hours-input" max="99" min="0" placeholder="00" type="number"/>
-            <input id="left-hamstrings-minutes-input" max="59" min="0" placeholder="00" type="number"/>
-            <input id="left-hamstrings-seconds-input" max="59" min="0" placeholder="00" type="number"/>
-        </div>
-        <div class="button-row">
-            <button class="start-btn" id="left-hamstrings-start-btn">Start</button>
-            <button class="stop-btn" id="left-hamstrings-stop-btn">Stop</button>
-            <button class="reset-btn" id="left-hamstrings-reset-btn">Reset</button>
-        </div>
-        <div class="sensor-reading" id="left-hamstrings-sensor">Sensor: N/A</div>
-    </div>
-
-    <!-- Right Hamstrings Timer -->
-    <div class="body-section hamstrings-box right">
-        <h2>Right Hamstrings</h2>
-        <div class="timer-display" id="right-hamstrings-timer-display">00:00:00</div>
-        <div class="time-inputs">
-            <input id="right-hamstrings-hours-input" max="99" min="0" placeholder="00" type="number"/>
-            <input id="right-hamstrings-minutes-input" max="59" min="0" placeholder="00" type="number"/>
-            <input id="right-hamstrings-seconds-input" max="59" min="0" placeholder="00" type="number"/>
-        </div>
-        <div class="button-row">
-            <button class="start-btn" id="right-hamstrings-start-btn">Start</button>
-            <button class="stop-btn" id="right-hamstrings-stop-btn">Stop</button>
-            <button class="reset-btn" id="right-hamstrings-reset-btn">Reset</button>
-        </div>
-        <div class="sensor-reading" id="right-hamstrings-sensor">Sensor: N/A</div>
-    </div>
-
-    <!-- Left Knee Pit Timer -->
-    <div class="body-section knee-pit-box left">
-        <h2>Left Knee Pit</h2>
-        <div class="timer-display" id="left-knee-pit-timer-display">00:00:00</div>
-        <div class="time-inputs">
-            <input id="left-knee-pit-hours-input" max="99" min="0" placeholder="00" type="number"/>
-            <input id="left-knee-pit-minutes-input" max="59" min="0" placeholder="00" type="number"/>
-            <input id="left-knee-pit-seconds-input" max="59" min="0" placeholder="00" type="number"/>
-        </div>
-        <div class="button-row">
-            <button class="start-btn" id="left-knee-pit-start-btn">Start</button>
-            <button class="stop-btn" id="left-knee-pit-stop-btn">Stop</button>
-            <button class="reset-btn" id="left-knee-pit-reset-btn">Reset</button>
-        </div>
-        <div class="sensor-reading" id="left-knee-pit-sensor">Sensor: N/A</div>
-    </div>
-
-    <!-- Right Knee Pit Timer -->
-    <div class="body-section knee-pit-box right">
-        <h2>Right Knee Pit</h2>
-        <div class="timer-display" id="right-knee-pit-timer-display">00:00:00</div>
-        <div class="time-inputs">
-            <input id="right-knee-pit-hours-input" max="99" min="0" placeholder="00" type="number"/>
-            <input id="right-knee-pit-minutes-input" max="59" min="0" placeholder="00" type="number"/>
-            <input id="right-knee-pit-seconds-input" max="59" min="0" placeholder="00" type="number"/>
-        </div>
-        <div class="button-row">
-            <button class="start-btn" id="right-knee-pit-start-btn">Start</button>
-            <button class="stop-btn" id="right-knee-pit-stop-btn">Stop</button>
-            <button class="reset-btn" id="right-knee-pit-reset-btn">Reset</button>
-        </div>
-        <div class="sensor-reading" id="right-knee-pit-sensor">Sensor: N/A</div>
-    </div>
-
 </div>
 
 <script defer src="timer.js"></script>

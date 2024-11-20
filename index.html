@@ -8,37 +8,36 @@
     <script>
         // Function to handle tab switching
         function openTab(evt, tabName) {
-            const tabContent = document.getElementsByClassName("tab-content");
-            const tabLinks = document.getElementsByClassName("tab-link");
-
-            // Hide all tab contents
-            for (let i = 0; i < tabContent.length; i++) {
-                tabContent[i].style.display = "none";
+            // Hide all tab content
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].style.display = "none";
             }
 
-            // Remove the active class from all tab links
+            // Remove active class from all tabs
+            const tabLinks = document.getElementsByClassName("tab-link");
             for (let i = 0; i < tabLinks.length; i++) {
                 tabLinks[i].classList.remove("active");
             }
 
-            // Show the selected tab and add the active class to the link
+            // Show the clicked tab
             document.getElementById(tabName).style.display = "block";
+
+            // Set the clicked tab as active
             evt.currentTarget.classList.add("active");
         }
     </script>
 </head>
 <body>
 
-<h1>Monitoring System</h1>
-
 <!-- Tab Links -->
 <div class="tab-container">
-    <!-- Ensure onclick attribute directly calls openTab -->
     <button class="tab-link active" onclick="openTab(event, 'lower-body')">Lower Body Monitoring</button>
     <button class="tab-link" onclick="openTab(event, 'grid')">Grid</button>
+    <button class="tab-link" onclick="openTab(event, 'user-info-tab')">User Info</button>
 </div>
 
-<div id="lower-body" class="tab-content" style="display:block;">
+<div id="lower-body" class="tab-content">
     <div id="lower-body-container">
         <img alt="Lower Body Diagram" id="lower-body-image" src="lower_body_clipart.png">
 
@@ -154,6 +153,23 @@
     <div id="grid-container">
         <table id="sensor-grid"></table>
     </div>
+</div>
+
+<!-- User Info Tab -->
+<div id="user-info-tab" class="tab-content">
+    <h2>User Info</h2>
+    <form id="user-info-form">
+        <label for="age">Age:</label>
+        <input type="number" id="age" placeholder="Enter your age">
+        <label for="weight">Weight (in lbs):</label>
+        <input type="number" id="weight" placeholder="Enter your weight">
+
+        <!-- Placeholder for the confirmation message -->
+        <p id="save-confirmation" style="display: none; color: green; font-weight: bold; margin-top: 10px;">Save
+            Confirmed</p>
+
+        <button type="button" onclick="saveUserInfo()">Save</button>
+    </form>
 </div>
 
 <script defer src="timer.js"></script>

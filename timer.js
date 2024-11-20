@@ -198,4 +198,61 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize
     document.getElementById("lower-body").style.display = "block";
     generateGrid();
+
+    let userAge = null;  // Global variable to store age
+    let userWeight = null;  // Global variable to store weight
+
+    // Save user info
+    window.saveUserInfo = function saveUserInfo() {
+        const age = document.getElementById('age').value;
+        const weight = document.getElementById('weight').value;
+
+        // Store the user info
+        userAge = age;
+        userWeight = weight;
+
+        // Display the confirmation message
+        const confirmationMessage = document.getElementById('save-confirmation');
+        confirmationMessage.style.display = 'block';
+
+        // Hide the message after 3 seconds
+        setTimeout(() => {
+            confirmationMessage.style.display = 'none';
+        }, 3000);
+
+        // Log the saved values (for debugging)
+        console.log('Age:', age, 'Weight:', weight);
+    };
+
+    // Add an event listener to the save button
+    document.addEventListener("DOMContentLoaded", () => {
+        const saveButton = document.getElementById("save-button");
+
+        if (saveButton) {
+            // Debugging: Log that the save button element was found
+            console.log("Save button element found.");
+
+            saveButton.addEventListener("click", saveUserInfo);
+        } else {
+            console.error("Save button not found.");
+        }
+    });
+
+    // Hide all tabs initially
+    const tabContents = document.getElementsByClassName("tab-content");
+    for (let i = 0; i < tabContents.length; i++) {
+        tabContents[i].style.display = "none";
+    }
+
+    // Show the default tab (Lower Body Monitoring)
+    const defaultTab = document.getElementById("lower-body");
+    if (defaultTab) {
+        defaultTab.style.display = "block";
+    }
+
+    // Set the first tab link as active
+    const tabLinks = document.getElementsByClassName("tab-link");
+    if (tabLinks.length > 0) {
+        tabLinks[0].classList.add("active");
+    }
 });

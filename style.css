@@ -252,3 +252,102 @@ button {
 .empty-cell {
     background-color: #5bc0de; /* Light blue for empty cells */
 }
+
+/* Basic Styling for Tabs */
+.tab-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.tab-link {
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    margin: 0 5px;
+    border-radius: 5px 5px 0 0;
+    font-size: 1rem;
+}
+
+.tab-link.active {
+    background-color: #0056b3;
+}
+
+/* Default tab content styles (no grey box) */
+.tab-content {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+.tab-content.active {
+    display: block; /* Show active tab */
+    visibility: visible; /* Make it visible */
+    height: auto; /* Adjust height for content */
+    overflow: visible;
+}
+
+/* Center User Info title */
+#user-info-tab h2 {
+    text-align: center; /* Center the title */
+    margin-bottom: 20px; /* Add space below the title */
+}
+
+/* Style the User Info form container */
+#user-info-form {
+    max-width: 300px; /* Limit the form width */
+    margin: 20px auto; /* Center horizontally and add top margin */
+    padding: 20px; /* Add padding inside the box */
+    background-color: #f9f9f9; /* Light grey background */
+    border: 1px solid #ccc; /* Add a light border */
+    border-radius: 10px; /* Round the corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    text-align: center; /* Center-align text */
+}
+
+/* Ensure input boxes and buttons scale properly */
+#user-info-form input {
+    width: calc(100% - 10px); /* Adjust to include some padding */
+    margin: 10px 0; /* Space between inputs */
+    padding: 10px; /* Add padding inside inputs */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 1rem; /* Font size for readability */
+    box-sizing: border-box; /* Include padding in width */
+}
+
+#user-info-form button {
+    width: calc(100% - 20px); /* Full width minus padding */
+    max-width: 100%; /* Prevent overflow */
+    margin: 10px 0; /* Add spacing between inputs */
+    padding: 10px; /* Add padding inside inputs */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 5px; /* Round the corners */
+    font-size: 1rem; /* Adjust font size */
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
+/* Adjust the Save button */
+#user-info-form button {
+    background-color: #007bff; /* Blue background */
+    color: white; /* White text */
+    border: none; /* Remove border */
+    cursor: pointer; /* Show pointer cursor */
+    font-size: 1rem; /* Adjust font size */
+}
+
+#user-info-form button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+#save-confirmation {
+    display: none; /* Hidden by default */
+    color: green; /* Green text for success */
+    font-weight: bold; /* Bold for emphasis */
+    margin-top: 10px; /* Add space above the Save button */
+    text-align: center; /* Center align */
+}
